@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Individual;
 
 class CreateOtherInformationTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateOtherInformationTable extends Migration
     {
         Schema::create('other_information', function (Blueprint $table) {
             $table->id();
-            $table->integer('individual_id');
+            $table->foreignIdFor(Individual::class)->constrained()->onDelete('cascade');
             $table->string('profession');
             $table->string('id_presented');
             $table->string('tin');
