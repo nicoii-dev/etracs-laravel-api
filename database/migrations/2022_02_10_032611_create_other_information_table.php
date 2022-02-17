@@ -17,10 +17,10 @@ class CreateOtherInformationTable extends Migration
         Schema::create('other_information', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Individual::class)->constrained()->onDelete('cascade');
-            $table->string('profession');
+            $table->string('profession')->nullable();
             $table->string('id_presented');
-            $table->string('tin');
-            $table->string('sss');
+            $table->string('tin')->nullable();
+            $table->string('sss')->nullable();
             $table->integer('height');
             $table->integer('weight');
             $table->timestamps();

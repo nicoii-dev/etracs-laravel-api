@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class OtherInformation extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'individual_id',
+        'profession',
+        'id_presented',
+        'tin',
+        'sss',
+        'height',
+        'weight'
+    ];
 }

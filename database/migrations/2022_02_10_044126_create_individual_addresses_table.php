@@ -17,7 +17,7 @@ class CreateIndividualAddressesTable extends Migration
         Schema::create('individual_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Individual::class)->constrained()->onDelete('cascade');
-            $table->string('house_number');
+            $table->string('house_number')->nullable();
             $table->string('street');
             $table->string('barangay');
             $table->string('city_municipality');
