@@ -20,6 +20,7 @@ Route::get('/individual/{id}', [IndividualController::class, 'show']);
 Route::post('/individual', [IndividualController::class, 'store']);
 Route::put('/individual/{id}', [IndividualController::class, 'update']);
 Route::delete('/individual/{id}', [IndividualController::class, 'destroy']); 
+Route::post('/individual/multipledelete', [IndividualController::class, 'multipleDelete']); 
 
 Route::get('/juridical', [JuridicalController::class, 'index']);
 Route::get('/juridical/{id}', [JuridicalController::class, 'show']);

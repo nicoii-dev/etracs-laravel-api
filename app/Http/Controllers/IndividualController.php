@@ -7,6 +7,7 @@ use App\Models\Individual;
 use App\Models\IndividualAddress;
 use App\Models\OtherInformation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class IndividualController extends Controller
 {
@@ -17,9 +18,6 @@ class IndividualController extends Controller
      */
     public function index()
     {
-        // $individualAddress = Individual::with('address')->get();
-        // $otherInformation = Individual::with('other_info')->get();
-        // return $individualAddress;
         return DB::table('individuals')
         ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
@@ -44,10 +42,12 @@ class IndividualController extends Controller
             'place_of_birth' => 'required',
             'gender' => 'required',
             'civil_status' => 'required',
-
             'street' => 'required',
             'barangay' => 'required',
             'city_municipality' => 'required',
+            'id_presented' => 'required',
+            'height' => 'required',
+            'weight' => 'required',
         ]);
 
         $individual = Individual::create([
@@ -159,5 +159,20 @@ class IndividualController extends Controller
     public function destroy($id)
     {
         return Individual::destroy($id);
+    }
+
+    public function multipleDelete(Request $request)
+    {
+        $ids = $request->ids;
+        if(DB::table("individuals")->whereIn('id',explode(",",$ids))->delete()){
+            return DB::table('individuals')
+            ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
+            ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
+            ->select('individuals.*', 'individual_addresses.*', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+            ->get();
+        }else{
+            return 404;
+        }
+
     }
 }
