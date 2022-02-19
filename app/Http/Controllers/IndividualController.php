@@ -19,7 +19,7 @@ class IndividualController extends Controller
     public function index()
     {
         return DB::table('individuals')
-        ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
+        ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
         ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
                 'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
@@ -88,9 +88,9 @@ class IndividualController extends Controller
         
         return DB::table('individuals')
         ->where('individuals.id', $individual->id)
-        ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
+        ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
-        ->select('firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+        ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
                 'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
                 'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
         ->get();
@@ -106,9 +106,11 @@ class IndividualController extends Controller
     {
         return DB::table('individuals')
         ->where('individuals.id', $id)
-        ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
+        ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
-        ->select('individuals.*', 'individual_addresses.*', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+        ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+                'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
+                'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
         ->get();
     }
 
@@ -120,21 +122,27 @@ class IndividualController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $individual = Individual::find($id);
-        
-        $individual->update([
-            'firstname' => $request['firstname'],
-            'middlename' => $request['middlename'],
-            'lastname' => $request['lastname'],
-            'email' => $request['email'],
-            'phone_number' => $request['phone_number'],
-            'birth_date' => $request['birth_date'],
-            'place_of_birth' => $request['place_of_birth'],
-            'gender' => $request['gender'],
-            'civil_status' => $request['civil_status'],
+    {        
+        $request->validate([
+            'firstname' => 'required',
+            'middlename' => 'required',
+            'lastname' => 'required',
+            'phone_number' => 'required',
+            'birth_date' => 'required',
+            'place_of_birth' => 'required',
+            'citizenship' => 'required',
+            'gender' => 'required',
+            'civil_status' => 'required',
+            'street' => 'required',
+            'barangay' => 'required',
+            'city_municipality' => 'required',
+            'zipcode' => 'required',
+            'id_presented' => 'required',
+            'height' => 'required',
+            'weight' => 'required',
         ]);
 
+        $individual = Individual::find($id);
         IndividualAddress::where('individual_id',$id)->update([
             'house_number' => $request['house_number'],
             'street' => $request['street'],
@@ -153,9 +161,11 @@ class IndividualController extends Controller
 
         return DB::table('individuals')
         ->where('individuals.id', $id)
-        ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
+        ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
-        ->select('individuals.*', 'individual_addresses.*', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+        ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+                'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
+                'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
         ->get();
     }
 
@@ -167,7 +177,17 @@ class IndividualController extends Controller
      */
     public function destroy($id)
     {
-        return Individual::destroy($id);
+        if(DB::table("individuals")->where('id',$id)->delete()){
+            return DB::table('individuals')
+            ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
+            ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
+            ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+                    'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
+                    'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+            ->get();
+        }else{
+            return 500;
+        }
     }
 
     public function multipleDelete(Request $request)
@@ -177,10 +197,12 @@ class IndividualController extends Controller
             return DB::table('individuals')
             ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
             ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
-            ->select('individuals.*', 'individual_addresses.*', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+            ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+                    'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
+                    'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
             ->get();
         }else{
-            return 404;
+            return 500;
         }
 
     }

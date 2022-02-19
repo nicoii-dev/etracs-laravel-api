@@ -17,7 +17,7 @@ class CreateJuridicalAddressesTable extends Migration
         Schema::create('juridical_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Juridical::class)->constrained()->onDelete('cascade');
-            $table->string('house_number');
+            $table->string('house_number')->nullable();
             $table->string('street');
             $table->string('barangay');
             $table->string('city_municipality');

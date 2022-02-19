@@ -27,3 +27,4 @@ Route::get('/juridical/{id}', [JuridicalController::class, 'show']);
 Route::post('/juridical', [JuridicalController::class, 'store']);
 Route::put('/juridical/{id}', [JuridicalController::class, 'update']);
 Route::delete('/juridical/{id}', [JuridicalController::class, 'destroy']); 
+Route::post('/juridical/multipledelete', [JuridicalController::class, 'multipleDelete']); 
