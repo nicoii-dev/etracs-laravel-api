@@ -15,8 +15,8 @@ class CreateMultiplesTable extends Migration
     {
         Schema::create('multiples', function (Blueprint $table) {
             $table->id();
-            $table->integer('account_number');
-            $table->string('name');
+            $table->string('account_number');
+            $table->string('multiple_name');
             $table->string('contact_number');
             $table->string('remarks');
             $table->timestamps();

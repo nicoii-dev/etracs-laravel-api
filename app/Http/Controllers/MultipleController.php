@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Multiple;
+use App\Models\MultipleAddress;
+use Illuminate\Support\Facades\DB;
 
 class MultipleController extends Controller
 {
@@ -14,7 +16,11 @@ class MultipleController extends Controller
      */
     public function index()
     {
-        return Multiple::all();
+        return DB::table('multiples')
+        ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
+        ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
+                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+        ->get();
     }
 
     /**
@@ -27,11 +33,36 @@ class MultipleController extends Controller
     {
         $request->validate([
             'account_number' => 'required',
-            'name' => 'required',
+            'multiple_name' => 'required',
             'contact_number' => 'required',
             'remarks' => 'required',
+            'street' => 'required',
+            'barangay' => 'required',
+            'city_municipality' => 'required',
+            'zipcode' => 'required'
         ]);
-        return Multiple::create($request->all());
+        
+        $multiple = Multiple::create([
+            'account_number' => $request['account_number'],
+            'multiple_name' => $request['multiple_name'],
+            'contact_number' => $request['contact_number'],
+            'remarks' => $request['remarks'],
+        ]);
+
+        MultipleAddress::create([
+            'multiple_id' => $multiple->id,
+            'house_number' => $request['house_number'],
+            'street' => $request['street'],
+            'barangay' => $request['barangay'],
+            'city_municipality' => $request['city_municipality'],
+            'zipcode' => $request['zipcode'],
+        ]);
+
+        return DB::table('multiples')
+        ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
+        ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
+                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+        ->get();
     }
 
     /**
@@ -54,9 +85,39 @@ class MultipleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'account_number' => 'required',
+            'multiple_name' => 'required',
+            'contact_number' => 'required',
+            'remarks' => 'required',
+            'street' => 'required',
+            'barangay' => 'required',
+            'city_municipality' => 'required',
+            'zipcode' => 'required'
+        ]);
+
         $multiple = Multiple::find($id);
-        $multiple->update($request->all());
-        return $multiple;
+        $multiple->update([
+            'account_number' => $request['account_number'],
+            'multiple_name' => $request['multiple_name'],
+            'contact_number' => $request['contact_number'],
+            'remarks' => $request['remarks'],
+        ]);
+
+        MultipleAddress::where('multiple_id',$id)->update([
+            'house_number' => $request['house_number'],
+            'street' => $request['street'],
+            'barangay' => $request['barangay'],
+            'city_municipality' => $request['city_municipality'],
+            'zipcode' => $request['zipcode'],
+        ]);
+
+        return DB::table('multiples')
+        ->where('multiples.id', $id)
+        ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
+        ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
+                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+        ->get();
     }
 
     /**
@@ -67,6 +128,29 @@ class MultipleController extends Controller
      */
     public function destroy($id)
     {
-        return Multiple::destroy($id);
+        if(DB::table("multiples")->where('id',$id)->delete()){
+            return DB::table('multiples')
+            ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
+            ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
+                        'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+            ->get();
+        }else{
+            return 500;
+        }
+    }
+
+    public function multipleDelete(Request $request)
+    {
+        $ids = $request->ids;
+        if(DB::table("multiples")->whereIn('id',explode(",",$ids))->delete()){
+            return DB::table('multiples')
+            ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
+            ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
+                        'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+            ->get();
+        }else{
+            return 500;
+        }
+
     }
 }

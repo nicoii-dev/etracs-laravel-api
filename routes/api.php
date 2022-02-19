@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\JuridicalController;
+use App\Http\Controllers\MultipleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,10 @@ Route::post('/juridical', [JuridicalController::class, 'store']);
 Route::put('/juridical/{id}', [JuridicalController::class, 'update']);
 Route::delete('/juridical/{id}', [JuridicalController::class, 'destroy']); 
 Route::post('/juridical/multipledelete', [JuridicalController::class, 'multipleDelete']); 
+
+Route::get('/multiple', [MultipleController::class, 'index']);
+Route::get('/multiple/{id}', [MultipleController::class, 'show']);
+Route::post('/multiple', [MultipleController::class, 'store']);
+Route::put('/multiple/{id}', [MultipleController::class, 'update']);
+Route::delete('/multiple/{id}', [MultipleController::class, 'destroy']); 
+Route::post('/multiple/multipledelete', [MultipleController::class, 'multipleDelete']); 
