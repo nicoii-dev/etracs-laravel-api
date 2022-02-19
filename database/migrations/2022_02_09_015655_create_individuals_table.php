@@ -18,9 +18,11 @@ class CreateIndividualsTable extends Migration
             $table->string('firstname');
             $table->string('middlename');
             $table->string('lastname');
+            $table->string('email')->nullable();;
             $table->string('phone_number');
             $table->date('birth_date');
             $table->string('place_of_birth');
+            $table->string('citizenship');
             $table->string('gender');
             $table->string('civil_status');
             $table->timestamps();

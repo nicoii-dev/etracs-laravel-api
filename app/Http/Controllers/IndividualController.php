@@ -21,7 +21,9 @@ class IndividualController extends Controller
         return DB::table('individuals')
         ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
-        ->select('individuals.*', 'individual_addresses.*', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+        ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+                'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
+                'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
         ->get();
     }
 
@@ -40,11 +42,13 @@ class IndividualController extends Controller
             'phone_number' => 'required',
             'birth_date' => 'required',
             'place_of_birth' => 'required',
+            'citizenship' => 'required',
             'gender' => 'required',
             'civil_status' => 'required',
             'street' => 'required',
             'barangay' => 'required',
             'city_municipality' => 'required',
+            'zipcode' => 'required',
             'id_presented' => 'required',
             'height' => 'required',
             'weight' => 'required',
@@ -58,6 +62,7 @@ class IndividualController extends Controller
             'phone_number' => $request['phone_number'],
             'birth_date' => $request['birth_date'],
             'place_of_birth' => $request['place_of_birth'],
+            'citizenship' => $request['citizenship'],
             'gender' => $request['gender'],
             'civil_status' => $request['civil_status'],
         ]);
@@ -68,6 +73,7 @@ class IndividualController extends Controller
             'street' => $request['street'],
             'barangay' => $request['barangay'],
             'city_municipality' => $request['city_municipality'],
+            'zipcode' => $request['zipcode'],
         ]);
 
         OtherInformation::create([
@@ -84,7 +90,9 @@ class IndividualController extends Controller
         ->where('individuals.id', $individual->id)
         ->join('individual_addresses', '.individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
-        ->select('individuals.*', 'individual_addresses.*', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
+        ->select('firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
+                'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
+                'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
         ->get();
     }
 
@@ -132,6 +140,7 @@ class IndividualController extends Controller
             'street' => $request['street'],
             'barangay' => $request['barangay'],
             'city_municipality' => $request['city_municipality'],
+            'zipcode' => $request['zipcode'],
         ]);
         OtherInformation::where('individual_id',$id)->update([
             'profession' => $request['profession'],

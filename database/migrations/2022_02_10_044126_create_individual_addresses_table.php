@@ -21,6 +21,7 @@ class CreateIndividualAddressesTable extends Migration
             $table->string('street');
             $table->string('barangay');
             $table->string('city_municipality');
+            $table->string('zipcode');
             $table->timestamps();
         });
     }

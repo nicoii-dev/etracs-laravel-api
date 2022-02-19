@@ -15,5 +15,6 @@ class IndividualAddress extends Model
         'street',
         'barangay',
         'city_municipality',
+        'zipcode'
     ];
 }

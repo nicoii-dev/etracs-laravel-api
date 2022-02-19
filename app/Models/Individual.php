@@ -17,6 +17,7 @@ class Individual extends Model
         'phone_number',
         'birth_date',
         'place_of_birth',
+        'citizenship',
         'gender',
         'civil_status',
     ];
