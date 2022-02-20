@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\JuridicalController;
 use App\Http\Controllers\MultipleController;
+use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\MunicipalityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,15 @@ Route::post('/multiple', [MultipleController::class, 'store']);
 Route::put('/multiple/{id}', [MultipleController::class, 'update']);
 Route::delete('/multiple/{id}', [MultipleController::class, 'destroy']); 
 Route::post('/multiple/multipledelete', [MultipleController::class, 'multipleDelete']); 
+
+Route::get('/barangay', [BarangayController::class, 'index']);
+Route::get('/barangay/{id}', [BarangayController::class, 'show']);
+Route::post('/barangay', [BarangayController::class, 'store']);
+Route::put('/barangay/{id}', [BarangayController::class, 'update']);
+Route::delete('/barangay/{id}', [BarangayController::class, 'destroy']); 
+
+Route::get('/municipality', [MunicipalityController::class, 'index']);
+Route::get('/municipality/{id}', [MunicipalityController::class, 'show']);
+Route::post('/municipality', [MunicipalityController::class, 'store']);
+Route::put('/municipality/{id}', [MunicipalityController::class, 'update']);
+Route::delete('/municipality/{id}', [MunicipalityController::class, 'destroy']); 
