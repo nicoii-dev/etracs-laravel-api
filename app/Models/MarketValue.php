@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Multiple extends Model
+class MarketValue extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'account_number',
-        'multiple_name',
-        'email',
-        'contact_number',
-        'remarks'
+        'assessment_level_id',
+        'market_value_from',
+        'market_value_to',
+        'rate',
     ];
 }

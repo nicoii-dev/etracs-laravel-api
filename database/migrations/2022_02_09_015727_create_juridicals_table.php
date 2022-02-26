@@ -17,12 +17,13 @@ class CreateJuridicalsTable extends Migration
             $table->id();
             $table->string('account_number');
             $table->string('juridical_name');
+            $table->string('email')->nullable();
             $table->string('contact_number');
             $table->date('date_registered');
             $table->string('kind_of_organization');
             $table->string('tin');
             $table->string('nature_of_business');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

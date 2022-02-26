@@ -18,8 +18,8 @@ class MultipleController extends Controller
     {
         return DB::table('multiples')
         ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
-        ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
-                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+        ->select('multiples.id', 'account_number', 'multiple_name', 'email', 'contact_number',
+                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
 
@@ -35,7 +35,6 @@ class MultipleController extends Controller
             'account_number' => 'required',
             'multiple_name' => 'required',
             'contact_number' => 'required',
-            'remarks' => 'required',
             'street' => 'required',
             'barangay' => 'required',
             'city_municipality' => 'required',
@@ -45,6 +44,7 @@ class MultipleController extends Controller
         $multiple = Multiple::create([
             'account_number' => $request['account_number'],
             'multiple_name' => $request['multiple_name'],
+            'email' => $request['email'],
             'contact_number' => $request['contact_number'],
             'remarks' => $request['remarks'],
         ]);
@@ -60,8 +60,8 @@ class MultipleController extends Controller
 
         return DB::table('multiples')
         ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
-        ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
-                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+        ->select('multiples.id', 'account_number', 'multiple_name', 'email', 'contact_number',
+                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
 
@@ -89,17 +89,16 @@ class MultipleController extends Controller
             'account_number' => 'required',
             'multiple_name' => 'required',
             'contact_number' => 'required',
-            'remarks' => 'required',
             'street' => 'required',
             'barangay' => 'required',
             'city_municipality' => 'required',
             'zipcode' => 'required'
         ]);
 
-        $multiple = Multiple::find($id);
-        $multiple->update([
+        Multiple::where('id',$id)->update([
             'account_number' => $request['account_number'],
             'multiple_name' => $request['multiple_name'],
+            'email' => $request['email'],
             'contact_number' => $request['contact_number'],
             'remarks' => $request['remarks'],
         ]);
@@ -113,10 +112,9 @@ class MultipleController extends Controller
         ]);
 
         return DB::table('multiples')
-        ->where('multiples.id', $id)
         ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
-        ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
-                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+        ->select('multiples.id', 'account_number', 'multiple_name', 'email', 'contact_number',
+                    'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
 
@@ -131,8 +129,8 @@ class MultipleController extends Controller
         if(DB::table("multiples")->where('id',$id)->delete()){
             return DB::table('multiples')
             ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
-            ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
-                        'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+            ->select('multiples.id', 'account_number', 'multiple_name', 'email', 'contact_number',
+                        'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
             ->get();
         }else{
             return 500;
@@ -145,8 +143,8 @@ class MultipleController extends Controller
         if(DB::table("multiples")->whereIn('id',explode(",",$ids))->delete()){
             return DB::table('multiples')
             ->join('multiple_addresses', 'multiples.id', '=', 'multiple_addresses.multiple_id')
-            ->select('multiples.id', 'account_number', 'multiple_name', 'contact_number', 'remarks',
-                        'house_number', 'street', 'barangay', 'city_municipality', 'zipcode') // specify the values
+            ->select('multiples.id', 'account_number', 'multiple_name', 'email', 'contact_number',
+                        'house_number', 'street', 'barangay', 'city_municipality', 'zipcode' , 'remarks',) // specify the values
             ->get();
         }else{
             return 500;

@@ -87,7 +87,6 @@ class IndividualController extends Controller
         ]);
         
         return DB::table('individuals')
-        ->where('individuals.id', $individual->id)
         ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
         ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',
@@ -142,7 +141,18 @@ class IndividualController extends Controller
             'weight' => 'required',
         ]);
 
-        $individual = Individual::find($id);
+        Individual::where('id',$id)->update([
+            'firstname' => $request['firstname'],
+            'middlename' => $request['middlename'],
+            'lastname' => $request['lastname'],
+            'email' => $request['email'],
+            'phone_number' => $request['phone_number'],
+            'birth_date' => $request['birth_date'],
+            'place_of_birth' => $request['place_of_birth'],
+            'citizenship' => $request['citizenship'],
+            'gender' => $request['gender'],
+            'civil_status' => $request['civil_status'],
+        ]);
         IndividualAddress::where('individual_id',$id)->update([
             'house_number' => $request['house_number'],
             'street' => $request['street'],
@@ -160,7 +170,6 @@ class IndividualController extends Controller
         ]);
 
         return DB::table('individuals')
-        ->where('individuals.id', $id)
         ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
         ->select('individuals.id', 'firstname', 'middlename', 'lastname', 'email', 'phone_number', 'house_number',

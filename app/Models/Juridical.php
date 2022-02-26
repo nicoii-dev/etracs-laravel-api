@@ -12,6 +12,7 @@ class Juridical extends Model
     protected $fillable = [
         'account_number',
         'juridical_name',
+        'email',
         'contact_number',
         'date_registered',
         'kind_of_organization',

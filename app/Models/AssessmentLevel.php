@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Multiple extends Model
+class AssessmentLevel extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'account_number',
-        'multiple_name',
-        'email',
-        'contact_number',
-        'remarks'
+        'code',
+        'name',
+        'fix',
+        'rate',
+        'class',
     ];
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMultiplesTable extends Migration
+class CreateAssessmentLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateMultiplesTable extends Migration
      */
     public function up()
     {
-        Schema::create('multiples', function (Blueprint $table) {
+        Schema::create('assessment_levels', function (Blueprint $table) {
             $table->id();
-            $table->string('account_number');
-            $table->string('multiple_name');
-            $table->string('email')->nullable();
-            $table->string('contact_number');
-            $table->string('remarks')->nullable();
+            $table->string('code');
+            $table->string('name');
+            $table->string('fix');
+            $table->string('rate');
+            $table->string('class');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateMultiplesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('multiples');
+        Schema::dropIfExists('assessment_levels');
     }
 }
