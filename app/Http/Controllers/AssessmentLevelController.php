@@ -12,22 +12,18 @@ class AssessmentLevelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function index()
     {
-        return DB::table('assessment_levels')
-        ->join('market_values', 'assessment_levels.id', '=', 'market_values.assessment_level_id')
-        ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'market_value_from',
-                    'market_value_to', 'market_value_rate') // specify the values
-        ->get();
+        return DB::table('assessment_levels')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function store(Request $request)
     {
@@ -37,43 +33,30 @@ class AssessmentLevelController extends Controller
             'fix' => 'required',
             'rate' => 'required',
             'class' => 'required',
-            'market_value_from' => 'required',
-            'market_value_to' => 'required',
-            'market_rate' => 'required'
         ]);
 
-        $assessmentLevel = AssessmentLevel::create([
+        AssessmentLevel::create([
             'code' => $request['code'],
             'name' => $request['name'],
             'fix' => $request['fix'],
             'rate' => $request['rate'],
             'class' => $request['class'],
         ]);
+        return DB::table('assessment_levels')->get();
 
-        MarketValue::create([
-            'assessment_level_id' => $assessmentLevel->id,
-            'market_value_from' => $request['market_value_from'],
-            'market_value_to' => $request['market_value_to'],
-            'market_rate' => $request['market_rate'],
-        ]);
 
-        return DB::table('assessment_levels')
-            ->join('market_values', 'assessment_levels.id', '=', 'market_values.assessment_level_id')
-            ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'market_value_from',
-                'market_value_to', 'market_value_rate') // specify the values
-            ->get();
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function show($id)
     {
         return DB::table('assessment_levels')
-        ->where('id', $id)
+        ->where('assessment_levels.id', $id)
         ->join('market_values', 'assessment_levels.id', '=', 'market_values.assessment_level_id')
         ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'market_value_from',
                     'market_value_to', 'market_value_rate') // specify the values
@@ -85,7 +68,7 @@ class AssessmentLevelController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function update(Request $request, $id)
     {
@@ -95,45 +78,33 @@ class AssessmentLevelController extends Controller
             'fix' => 'required',
             'rate' => 'required',
             'class' => 'required',
-            'market_value_from' => 'required',
-            'market_value_to' => 'required',
-            'market_rate' => 'required'
         ]);
 
-         AssessmentLevel::where('id',$id)->update([
+         $update = AssessmentLevel::where('id',$id)->update([
             'code' => $request['code'],
             'name' => $request['name'],
             'fix' => $request['fix'],
             'rate' => $request['rate'],
             'class' => $request['class'],
         ]);
+         if($update){
+             return DB::table('assessment_levels')->get();
+         } else {
+             return 422;
+         }
 
-        MarketValue::where('assessment_level_id', $id)->update([
-            'market_value_from' => $request['market_value_from'],
-            'market_value_to' => $request['market_value_to'],
-            'market_rate' => $request['market_rate'],
-        ]);
-        return DB::table('assessment_levels')
-            ->join('market_values', 'assessment_levels.id', '=', 'market_values.assessment_level_id')
-            ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'market_value_from',
-                'market_value_to', 'market_value_rate') // specify the values
-            ->get();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function destroy($id)
     {
         if(DB::table("assessment_levels")->where('id',$id)->delete()){
-            return DB::table('assessment_levels')
-            ->join('market_values', 'assessment_levels.id', '=', 'market_values.assessment_level_id')
-            ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'market_value_from',
-                        'market_value_to', 'market_value_rate') // specify the values
-            ->get();
+            return DB::table('assessment_levels')->get();
         }else{
             return 500;
         }

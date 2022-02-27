@@ -8,6 +8,7 @@ use App\Http\Controllers\MultipleController;
 use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\MunicipalityController;
 use App\Http\Controllers\AssessmentLevelController;
+use App\Http\Controllers\MarketValueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,8 @@ Route::get('/assessment-levels/{id}', [AssessmentLevelController::class, 'show']
 Route::post('/assessment-levels', [AssessmentLevelController::class, 'store']);
 Route::put('/assessment-levels/{id}', [AssessmentLevelController::class, 'update']);
 Route::delete('/assessment-levels/{id}', [AssessmentLevelController::class, 'destroy']);
+
+Route::get('/market-value/{id}', [MarketValueController::class, 'show']);
+Route::post('/market-value', [MarketValueController::class, 'store']);
+Route::put('/market-value/{id}', [MarketValueController::class, 'update']);
+Route::post('/market-value/{id}', [MarketValueController::class, 'destroy']);

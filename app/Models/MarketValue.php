@@ -13,6 +13,6 @@ class MarketValue extends Model
         'assessment_level_id',
         'market_value_from',
         'market_value_to',
-        'rate',
+        'market_value_rate',
     ];
 }
