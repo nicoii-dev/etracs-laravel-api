@@ -12,6 +12,7 @@ class Municipality extends Model
     protected $fillable = [
         'municipality_name',
         'lgu_name',
+        'index_number',
         'parent_id'
     ];
 }

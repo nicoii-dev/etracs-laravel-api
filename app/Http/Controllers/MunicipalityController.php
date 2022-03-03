@@ -21,16 +21,23 @@ class MunicipalityController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function store(Request $request)
     {
         $request->validate([
             'municipality_name' => 'required',
             'lgu_name' => 'required',
+            'index_number' => 'required',
             'parent_id' => 'required',
         ]);
-        return Municipality::create($request->all());
+        Municipality::create([
+            'municipality_name' => $request['municipality_name'],
+            'lgu_name' => $request['lgu_name'],
+            'index_number' => $request['index_number'],
+            'parent_id' => $request['parent_id'],
+        ]);
+        return DB::table('municipalities')->get();
     }
 
     /**
@@ -49,20 +56,35 @@ class MunicipalityController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
     public function update(Request $request, $id)
     {
-        $municipality = Municipality::find($id);
-        $municipality->update($request->all());
-        return $municipality;
+        $request->validate([
+            'municipality_name' => 'required',
+            'lgu_name' => 'required',
+            'index_number' => 'required',
+            'parent_id' => 'required',
+        ]);
+
+        $update = Municipality::where('id',$id)->update([
+            'municipality_name' => $request['municipality_name'],
+            'lgu_name' => $request['lgu_name'],
+            'index_number' => $request['index_number'],
+            'parent_id' => $request['parent_id'],
+        ]);
+        if($update){
+            return DB::table('municipalities')->get();
+        } else {
+            return 422;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
     public function destroy($id)
     {

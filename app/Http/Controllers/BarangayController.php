@@ -21,28 +21,42 @@ class BarangayController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
     public function store(Request $request)
     {
         $request->validate([
+            'municipality_id' => 'required',
             'index_number' => 'required',
             'lgu_name' => 'required',
             'formal_name' => 'required',
             'pin' => 'required'
         ]);
-        return Barangay::create($request->all());
+
+        Barangay::create([
+            'municipality_id' => $request['municipality_id'],
+            'index_number' => $request['index_number'],
+            'lgu_name' => $request['lgu_name'],
+            'formal_name' => $request['formal_name'],
+            'pin' => $request['pin'],
+        ]);
+        return DB::table('barangays')
+            ->where('barangays.municipality_id', $request['municipality_id'])
+            ->get();
+
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function show($id)
     {
-        return Barangay::find($id);
+        return DB::table('barangays')
+            ->where('barangays.municipality_id', $id)
+            ->get();
     }
 
     /**
@@ -50,25 +64,44 @@ class BarangayController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function update(Request $request, $id)
     {
-        $barangay = Barangay::find($id);
-        $barangay->update($request->all());
-        return $barangay;
+        $request->validate([
+            'municipality_id' => 'required',
+            'index_number' => 'required',
+            'lgu_name' => 'required',
+            'formal_name' => 'required',
+            'pin' => 'required'
+        ]);
+
+        Barangay::where('id', $id)->update([
+            'index_number' => $request['index_number'],
+            'lgu_name' => $request['lgu_name'],
+            'formal_name' => $request['formal_name'],
+            'pin' => $request['pin'],
+        ]);
+        return DB::table('barangays')
+            ->where('barangays.municipality_id', $request['municipality_id'])
+            ->get();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $request->validate([
+            'municipality_id' => 'required',
+        ]);
         if(DB::table("barangays")->where('id',$id)->delete()){
-            return DB::table('barangays')->get();
+            return DB::table('barangays')
+                ->where('municipality_id', $request['municipality_id'])
+                ->get();
         }else{
             return 500;
         }

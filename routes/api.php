@@ -45,7 +45,7 @@ Route::get('/barangay', [BarangayController::class, 'index']);
 Route::get('/barangay/{id}', [BarangayController::class, 'show']);
 Route::post('/barangay', [BarangayController::class, 'store']);
 Route::put('/barangay/{id}', [BarangayController::class, 'update']);
-Route::delete('/barangay/{id}', [BarangayController::class, 'destroy']);
+Route::post('/barangay/{id}', [BarangayController::class, 'destroy']);
 
 Route::get('/municipality', [MunicipalityController::class, 'index']);
 Route::get('/municipality/{id}', [MunicipalityController::class, 'show']);
