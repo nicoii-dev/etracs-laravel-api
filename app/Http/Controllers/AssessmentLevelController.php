@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\AssessmentLevel;
-use App\Models\MarketValue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 

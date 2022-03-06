@@ -9,6 +9,10 @@ use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\MunicipalityController;
 use App\Http\Controllers\AssessmentLevelController;
 use App\Http\Controllers\MarketValueController;
+use App\Http\Controllers\ClassificationController;
+use App\Http\Controllers\SpecificClassController;
+use App\Http\Controllers\SubClassController;
+use App\Http\Controllers\StrippingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +67,23 @@ Route::get('/market-value/{id}', [MarketValueController::class, 'show']);
 Route::post('/market-value', [MarketValueController::class, 'store']);
 Route::put('/market-value/{id}', [MarketValueController::class, 'update']);
 Route::post('/market-value/{id}', [MarketValueController::class, 'destroy']);
+
+Route::get('/classification', [ClassificationController::class, 'index']);
+Route::post('/classification', [ClassificationController::class, 'store']);
+Route::put('/classification/{id}', [ClassificationController::class, 'update']);
+Route::delete('/classification/{id}', [ClassificationController::class, 'destroy']);
+
+Route::get('/specific-class/{id}', [SpecificClassController::class, 'show']);
+Route::post('/specific-class', [SpecificClassController::class, 'store']);
+Route::put('/specific-class/{id}', [SpecificClassController::class, 'update']);
+Route::post('/specific-class/{id}', [SpecificClassController::class, 'destroy']);
+
+Route::get('/sub-class/{id}', [SubClassController::class, 'show']);
+Route::post('/sub-class', [SubClassController::class, 'store']);
+Route::put('/sub-class/{id}', [SubClassController::class, 'update']);
+Route::post('/sub-class/{id}', [SubClassController::class, 'destroy']);
+
+Route::get('/stripping/{id}', [StrippingController::class, 'show']);
+Route::post('/stripping', [StrippingController::class, 'store']);
+Route::put('/stripping/{id}', [StrippingController::class, 'update']);
+Route::post('/stripping/{id}', [StrippingController::class, 'destroy']);
