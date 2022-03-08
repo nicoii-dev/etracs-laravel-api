@@ -13,6 +13,7 @@ use App\Http\Controllers\ClassificationController;
 use App\Http\Controllers\SpecificClassController;
 use App\Http\Controllers\SubClassController;
 use App\Http\Controllers\StrippingController;
+use App\Http\Controllers\LandAdjustmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +88,9 @@ Route::get('/stripping/{id}', [StrippingController::class, 'show']);
 Route::post('/stripping', [StrippingController::class, 'store']);
 Route::put('/stripping/{id}', [StrippingController::class, 'update']);
 Route::post('/stripping/{id}', [StrippingController::class, 'destroy']);
+
+Route::get('/land-adjustment', [LandAdjustmentController::class, 'index']);
+Route::get('/land-adjustment/{id}', [LandAdjustmentController::class, 'show']);
+Route::post('/land-adjustment', [LandAdjustmentController::class, 'store']);
+Route::put('/land-adjustment/{id}', [LandAdjustmentController::class, 'update']);
+Route::post('/land-adjustment/{id}', [LandAdjustmentController::class, 'destroy']);

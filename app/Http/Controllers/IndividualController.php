@@ -14,7 +14,7 @@ class IndividualController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function index()
     {
@@ -31,7 +31,7 @@ class IndividualController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function store(Request $request)
     {
@@ -85,7 +85,7 @@ class IndividualController extends Controller
             'height' => $request['height'],
             'weight' => $request['weight'],
         ]);
-        
+
         return DB::table('individuals')
         ->join('individual_addresses', 'individuals.id', '=', 'individual_addresses.individual_id')
         ->join('other_information', 'individuals.id', '=', 'other_information.individual_id')
@@ -99,7 +99,7 @@ class IndividualController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function show($id)
     {
@@ -118,10 +118,10 @@ class IndividualController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function update(Request $request, $id)
-    {        
+    {
         $request->validate([
             'firstname' => 'required',
             'middlename' => 'required',
@@ -182,7 +182,7 @@ class IndividualController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
     public function destroy($id)
     {
