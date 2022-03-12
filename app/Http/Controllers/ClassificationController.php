@@ -26,10 +26,12 @@ class ClassificationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'code' => 'required',
             'classification' => 'required',
         ]);
 
         Classification::create([
+            'code' => $request['code'],
             'classification' => $request['classification'],
         ]);
         return DB::table('classifications')->get();
@@ -56,9 +58,11 @@ class ClassificationController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'code' => 'required',
             'classification' => 'required',
         ]);
         $update = Classification::where('id',$id)->update([
+            'code' => $request['code'],
             'classification' => $request['classification'],
         ]);
         if($update){
