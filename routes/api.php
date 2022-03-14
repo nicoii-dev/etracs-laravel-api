@@ -14,6 +14,7 @@ use App\Http\Controllers\SpecificClassController;
 use App\Http\Controllers\SubClassController;
 use App\Http\Controllers\StrippingController;
 use App\Http\Controllers\LandAdjustmentController;
+use App\Http\Controllers\FormulaVariableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,4 +94,9 @@ Route::get('/land-adjustment', [LandAdjustmentController::class, 'index']);
 Route::get('/land-adjustment/{id}', [LandAdjustmentController::class, 'show']);
 Route::post('/land-adjustment', [LandAdjustmentController::class, 'store']);
 Route::put('/land-adjustment/{id}', [LandAdjustmentController::class, 'update']);
-Route::post('/land-adjustment/{id}', [LandAdjustmentController::class, 'destroy']);
+Route::delete('/land-adjustment/{id}', [LandAdjustmentController::class, 'destroy']);
+
+Route::get('/formula-variable/{id}', [StrippingController::class, 'show']);
+Route::post('/formula-variable', [StrippingController::class, 'store']);
+Route::put('/formula-variable/{id}', [StrippingController::class, 'update']);
+Route::delete('/formula-variable/{id}', [StrippingController::class, 'destroy']);

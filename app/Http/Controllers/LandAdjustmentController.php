@@ -10,12 +10,16 @@ class LandAdjustmentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return LandAdjustment[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
+     * @return LandAdjustment[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function index()
     {
-        //return LandAdjustment::with('AppliedTo')->get();
-        return LandAdjustment::all();
+        $data = DB::table("land_adjustments")->get();
+        for($i=0; $i < count($data); $i++){
+            $applied_to = DB::table("classifications")->whereIn('id',explode(",",$data[$i]->classification_id))->get();
+            $data[$i]->classification_id = $applied_to;
+        }
+        return $data;
     }
 
     /**
@@ -39,7 +43,12 @@ class LandAdjustmentController extends Controller
             'expression' => $request['expression'],
         ]);
 
-        return DB::table('land_adjustments')->get();
+        $data = DB::table("land_adjustments")->get();
+        for($i=0; $i < count($data); $i++){
+            $applied_to = DB::table("classifications")->whereIn('id',explode(",",$data[$i]->classification_id))->get();
+            $data[$i]->classification_id = $applied_to;
+        }
+        return $data;
     }
 
     /**
@@ -74,14 +83,19 @@ class LandAdjustmentController extends Controller
             'expression',
         ]);
 
-        $update = LandAdjustment::update([
+        $update = LandAdjustment::where('id', $id)->update([
             'code' => $request['code'],
             'name' => $request['name'],
             'classification_id' => $request['classification_id'],
             'expression' => $request['expression'],
         ]);
         if($update){
-            return DB::table('land_adjustments')->get();
+            $data = DB::table("land_adjustments")->get();
+            for($i=0; $i < count($data); $i++){
+                $applied_to = DB::table("classifications")->whereIn('id',explode(",",$data[$i]->classification_id))->get();
+                $data[$i]->classification_id = $applied_to;
+            }
+            return $data;
         }else {
             return 500;
         }
@@ -96,7 +110,12 @@ class LandAdjustmentController extends Controller
     public function destroy($id)
     {
         if(DB::table("land_adjustments")->where('id',$id)->delete()){
-            return DB::table('land_adjustments')->get();
+            $data = DB::table("land_adjustments")->get();
+            for($i=0; $i < count($data); $i++){
+                $applied_to = DB::table("classifications")->whereIn('id',explode(",",$data[$i]->classification_id))->get();
+                $data[$i]->classification_id = $applied_to;
+            }
+            return $data;
         }else{
             return 500;
         }
