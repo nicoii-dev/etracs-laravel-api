@@ -20,6 +20,8 @@ class CreateAssessmentLevelsTable extends Migration
             $table->string('fix');
             $table->string('rate');
             $table->string('class');
+            $table->string('lgu_tag')->nullable();
+            $table->string('year_tag');
             $table->timestamps();
         });
     }

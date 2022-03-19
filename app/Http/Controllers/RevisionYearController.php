@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\RevisionYear;
 use Illuminate\Http\Request;
-use App\Models\Classification;
 use Illuminate\Support\Facades\DB;
-class ClassificationController extends Controller
+
+class RevisionYearController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
+     * @return RevisionYear[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      */
     public function index()
     {
-        return DB::table('classifications')->get();
+        return RevisionYear::all();
     }
 
     /**
@@ -26,18 +26,13 @@ class ClassificationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required',
-            'classification' => 'required',
-            'year_tag' => 'required'
+            'revision_year' => 'required',
         ]);
 
-        Classification::create([
-            'code' => $request['code'],
-            'classification' => $request['classification'],
-            'lgu_tag' => $request['lgu_tag'],
-            'year_tag' => $request['year_tag'],
+        RevisionYear::create([
+            'revision_year' => $request['revision_year'],
         ]);
-        return DB::table('classifications')->get();
+        return DB::table('revision_years')->get();
     }
 
     /**
@@ -61,18 +56,14 @@ class ClassificationController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'code' => 'required',
-            'classification' => 'required',
-            'year_tag' => 'required'
+            'revision_year' => 'required',
         ]);
-        $update = Classification::where('id',$id)->update([
-            'code' => $request['code'],
-            'classification' => $request['classification'],
-            'lgu_tag' => $request['lgu_tag'],
-            'year_tag' => $request['year_tag'],
+
+        $update = RevisionYear::where('id',$id)->update([
+            'revision_year' => $request['revision_year'],
         ]);
         if($update){
-            return DB::table('classifications')->get();
+            return DB::table('revision_years')->get();
         } else {
             return 422;
         }
@@ -86,8 +77,8 @@ class ClassificationController extends Controller
      */
     public function destroy($id)
     {
-        if(DB::table("classifications")->where('id',$id)->delete()){
-            return DB::table('classifications')->get();
+        if(DB::table("revision_years")->where('id',$id)->delete()){
+            return DB::table('revision_years')->get();
         }else{
             return 500;
         }

@@ -19,6 +19,8 @@ class CreateLandAdjustmentsTable extends Migration
             $table->string('code');
             $table->string('classification_id')->nullable();
             $table->string('expression');
+            $table->string('lgu_tag')->nullable();
+            $table->string('year_tag');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassificationsTable extends Migration
+class CreateRevisionYearsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateClassificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classifications', function (Blueprint $table) {
+        Schema::create('revision_years', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('classification');
-            $table->string('lgu_tag')->nullable();
-            $table->string('year_tag');
+            $table->string('revision_year');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateClassificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classifications');
+        Schema::dropIfExists('revision_years');
     }
 }

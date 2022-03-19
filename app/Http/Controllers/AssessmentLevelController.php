@@ -32,6 +32,7 @@ class AssessmentLevelController extends Controller
             'fix' => 'required',
             'rate' => 'required',
             'class' => 'required',
+            'year_tag' => 'required',
         ]);
 
         AssessmentLevel::create([
@@ -40,6 +41,8 @@ class AssessmentLevelController extends Controller
             'fix' => $request['fix'],
             'rate' => $request['rate'],
             'class' => $request['class'],
+            'lgu_tag' => $request['lgu_tag'],
+            'year_tag' => $request['year_tag'],
         ]);
         return DB::table('assessment_levels')->get();
 
@@ -57,7 +60,7 @@ class AssessmentLevelController extends Controller
         return DB::table('assessment_levels')
         ->where('assessment_levels.id', $id)
         ->join('market_values', 'assessment_levels.id', '=', 'market_values.assessment_level_id')
-        ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'market_value_from',
+        ->select('assessment_levels.id', 'code', 'name', 'rate', 'class', 'lgu_tag', 'year_tag', 'market_value_from',
                     'market_value_to', 'market_value_rate') // specify the values
         ->get();
     }
@@ -77,6 +80,7 @@ class AssessmentLevelController extends Controller
             'fix' => 'required',
             'rate' => 'required',
             'class' => 'required',
+            'year_tag' => 'required',
         ]);
 
          $update = AssessmentLevel::where('id',$id)->update([
@@ -85,6 +89,8 @@ class AssessmentLevelController extends Controller
             'fix' => $request['fix'],
             'rate' => $request['rate'],
             'class' => $request['class'],
+             'lgu_tag' => $request['lgu_tag'],
+             'year_tag' => $request['year_tag'],
         ]);
          if($update){
              return DB::table('assessment_levels')->get();

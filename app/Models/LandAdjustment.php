@@ -15,6 +15,8 @@ class LandAdjustment extends Model
         'name',
         'classification_id',
         'expression',
+        'lgu_tag',
+        'year_tag',
     ];
 
 //    public function AppliedTo() {

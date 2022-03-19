@@ -15,5 +15,7 @@ class AssessmentLevel extends Model
         'fix',
         'rate',
         'class',
+        'lgu_tag',
+        'year_tag',
     ];
 }

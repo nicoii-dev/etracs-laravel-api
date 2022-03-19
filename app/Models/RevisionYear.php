@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Classification extends Model
+class RevisionYear extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'id',
-        'code',
-        'classification',
-        'lgu_tag',
-        'year_tag',
+        'revision_year',
     ];
 }

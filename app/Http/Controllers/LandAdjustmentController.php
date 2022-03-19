@@ -34,6 +34,7 @@ class LandAdjustmentController extends Controller
             'code' => 'required',
             'name' => 'required',
             'expression' => 'required',
+            'year_tag' => 'required',
         ]);
 
         LandAdjustment::create([
@@ -41,6 +42,8 @@ class LandAdjustmentController extends Controller
             'name' => $request['name'],
             'classification_id' => $request['classification_id'],
             'expression' => $request['expression'],
+            'lgu_tag' => $request['lgu_tag'],
+            'year_tag' => $request['year_tag'],
         ]);
 
         $data = DB::table("land_adjustments")->get();
@@ -81,6 +84,7 @@ class LandAdjustmentController extends Controller
             'code',
             'name',
             'expression',
+            'year_tag',
         ]);
 
         $update = LandAdjustment::where('id', $id)->update([
@@ -88,6 +92,8 @@ class LandAdjustmentController extends Controller
             'name' => $request['name'],
             'classification_id' => $request['classification_id'],
             'expression' => $request['expression'],
+            'lgu_tag' => $request['lgu_tag'],
+            'year_tag' => $request['year_tag'],
         ]);
         if($update){
             $data = DB::table("land_adjustments")->get();
