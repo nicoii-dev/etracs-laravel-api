@@ -16,6 +16,7 @@ use App\Http\Controllers\StrippingController;
 use App\Http\Controllers\LandAdjustmentController;
 use App\Http\Controllers\FormulaVariableController;
 use App\Http\Controllers\RevisionYearController;
+use App\Http\Controllers\AppliedToLguController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,3 +107,7 @@ Route::get('/revision-year', [RevisionYearController::class, 'index']);
 Route::post('/revision-year', [RevisionYearController::class, 'store']);
 Route::put('/revision-year/{id}', [RevisionYearController::class, 'update']);
 Route::delete('/revision-year/{id}', [RevisionYearController::class, 'destroy']);
+
+Route::get('/applied-to-lgu/{id}', [AppliedToLguController::class, 'show']);
+Route::post('/applied-to-lgu', [AppliedToLguController::class, 'store']);
+Route::delete('/applied-to-lgu/{id}', [AppliedToLguController::class, 'destroy']);
