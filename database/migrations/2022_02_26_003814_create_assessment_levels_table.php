@@ -17,7 +17,7 @@ class CreateAssessmentLevelsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->string('fix');
+            $table->string('fix')->nullable();
             $table->string('rate');
             $table->string('class');
             $table->string('lgu_tag')->nullable();

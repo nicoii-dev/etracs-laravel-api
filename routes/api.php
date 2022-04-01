@@ -110,4 +110,4 @@ Route::delete('/revision-year/{id}', [RevisionYearController::class, 'destroy'])
 
 Route::get('/applied-to-lgu/{id}', [AppliedToLguController::class, 'show']);
 Route::post('/applied-to-lgu', [AppliedToLguController::class, 'store']);
-Route::delete('/applied-to-lgu/{id}', [AppliedToLguController::class, 'destroy']);
+Route::post('/applied-to-lgu/{id}', [AppliedToLguController::class, 'destroy']);

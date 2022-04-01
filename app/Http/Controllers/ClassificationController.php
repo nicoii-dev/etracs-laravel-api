@@ -28,12 +28,14 @@ class ClassificationController extends Controller
         $request->validate([
             'code' => 'required',
             'classification' => 'required',
+            'rate' => 'required',
             'year_tag' => 'required'
         ]);
 
         Classification::create([
             'code' => $request['code'],
             'classification' => $request['classification'],
+            'rate' => $request['rate'],
             'lgu_tag' => $request['lgu_tag'],
             'year_tag' => $request['year_tag'],
         ]);
@@ -68,6 +70,7 @@ class ClassificationController extends Controller
         $update = Classification::where('id',$id)->update([
             'code' => $request['code'],
             'classification' => $request['classification'],
+            'rate' => $request['rate'],
             'lgu_tag' => $request['lgu_tag'],
             'year_tag' => $request['year_tag'],
         ]);

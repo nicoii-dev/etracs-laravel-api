@@ -13,6 +13,7 @@ class Classification extends Model
         'id',
         'code',
         'classification',
+        'rate',
         'lgu_tag',
         'year_tag',
     ];

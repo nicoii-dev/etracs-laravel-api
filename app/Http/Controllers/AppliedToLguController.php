@@ -33,7 +33,9 @@ class AppliedToLguController extends Controller
             'lgu' => $request['lgu'],
             'year_tag' => $request['year_tag'],
         ]);
-        return DB::table('applied_to_lgus')->get();
+        return DB::table('applied_to_lgus')
+            ->where('applied_to_lgus.year_tag', $request['year_tag'])
+            ->get();
     }
 
     /**
@@ -67,10 +69,12 @@ class AppliedToLguController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if(DB::table("applied_to_lgus")->where('id',$id)->delete()){
-            return DB::table('applied_to_lgus')->get();
+            return DB::table('applied_to_lgus')
+                ->where('applied_to_lgus.year_tag', $request['year_tag'])
+                ->get();
         }else{
             return 500;
         }

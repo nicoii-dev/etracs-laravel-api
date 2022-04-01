@@ -17,6 +17,7 @@ class CreateClassificationsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('classification');
+            $table->string('rate');
             $table->string('lgu_tag')->nullable();
             $table->string('year_tag');
             $table->timestamps();
