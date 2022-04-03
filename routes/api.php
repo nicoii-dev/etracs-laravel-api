@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\JobPositionController;
+use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\IndividualController;
 use App\Http\Controllers\JuridicalController;
 use App\Http\Controllers\MultipleController;
@@ -28,6 +31,27 @@ use App\Http\Controllers\AppliedToLguController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/create-account', [AccountController::class, 'createAccount']);
+Route::post('/change-password', [AccountController::class, 'changePassword']);
+Route::get('/accounts', [AccountController::class, 'show']);
+Route::post('/login', [AccountController::class, 'login']);
+Route::post('/logout', [AccountController::class, 'logout']);
+
+Route::get('/job-position', [JobPositionController::class, 'index']);
+Route::post('/job-position', [JobPositionController::class, 'store']);
+Route::put('/job-position/{id}', [JobPositionController::class, 'update']);
+Route::delete('/job-position/{id}', [JobPositionController::class, 'destroy']);
+
+Route::get('/personnel', [PersonnelController::class, 'index']);
+Route::post('/personnel', [PersonnelController::class, 'store']);
+Route::put('/personnel/{id}', [PersonnelController::class, 'update']);
+Route::delete('/personnel/{id}', [PersonnelController::class, 'destroy']);
+
+Route::get('/revision-year', [RevisionYearController::class, 'index']);
+Route::post('/revision-year', [RevisionYearController::class, 'store']);
+Route::put('/revision-year/{id}', [RevisionYearController::class, 'update']);
+Route::delete('/revision-year/{id}', [RevisionYearController::class, 'destroy']);
+
 Route::get('/individual', [IndividualController::class, 'index']);
 Route::get('/individual/{id}', [IndividualController::class, 'show']);
 Route::post('/individual', [IndividualController::class, 'store']);
