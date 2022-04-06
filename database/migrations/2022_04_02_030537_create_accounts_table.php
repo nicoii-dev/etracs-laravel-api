@@ -17,10 +17,10 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('personnel_id');
-            $table->string('username');
+            $table->string('email');
             $table->string('password');
             $table->string('allow_login');
-            $table->string('job_position_id');
+            $table->string('role');
             $table->timestamps();
         });
     }

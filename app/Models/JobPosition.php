@@ -13,7 +13,6 @@ class JobPosition extends Model
         'code',
         'description',
         'org',
-        'personnel_id',
-        'role',
+        'account_id',
     ];
 }

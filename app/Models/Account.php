@@ -16,10 +16,10 @@ class Account extends Model
 
     protected $fillable = [
         'personnel_id',
-        'username',
+        'email',
         'password',
         'allow_login',
-        'job_position_id',
+        'role',
     ];
 
     protected $hidden = [

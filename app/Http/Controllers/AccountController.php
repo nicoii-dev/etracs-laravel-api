@@ -3,71 +3,53 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use App\Models\User;
-use App\Models\Account;
 
 class AccountController extends Controller
 {
-//    public function register(Request $request) {
-//        $fields = $request->validate([
-//            'name' => 'required|string',
-//            'email' => 'required|string|unique:users,email',
-//            'password' => 'required|string|confirmed'
-//        ]);
-//
-//        $user = User::create([
-//            'name' => $fields['name'],
-//            'email' => $fields['email'],
-//            'password' => bcrypt($fields['password'])
-//        ]);
-//
-//        $token = $user->createToken('myapptoken')->plainTextToken;
-//
-//        $response = [
-//            'user' => $user,
-//            'token' => $token
-//        ];
-//
-//        return response($response, 201);
-//    }
+    public function index() {
+        return User::all();
+    }
 
     public function createAccount(Request $request) {
         $fields = $request->validate([
             'personnel_id' => 'required',
-            'username'  => 'required|string|unique:accounts,username',
+            'email' => 'required|string|unique:users,email',
             'password'  => 'required',
             'allow_login'  => 'required',
-            'job_position_id'  => 'required',
+            'role'  => 'required',
         ]);
 
-        $user = Account::create([
+        $user = User::create([
             'personnel_id' => $fields['personnel_id'],
-            'username' => $fields['username'],
+            'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
             'allow_login' => $fields['allow_login'],
-            'job_position_id' => $fields['job_position_id'],
+            'role' => $fields['role'],
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
+//        $response = [
+//            'user' => $user,
+//            'token' => $token
+//        ];
 
-        return response($response, 201);
+        return User::all();
     }
 
     public function changePassword(Request $request) {
         $fields = $request->validate([
-            'username' => 'required|string',
+            'email' => 'required|string',
             'current_password' => 'required',
             'new_password' => 'required',
         ]);
 
         // Check email
-        $user = Account::where('username', $fields['username'])->first();
+        $user = User::where('email', $fields['email'])->first();
 
         // Check password
         if(!$user || !Hash::check($fields['current_password'], $user->password)) {
@@ -87,12 +69,12 @@ class AccountController extends Controller
 
     public function login(Request $request) {
         $fields = $request->validate([
-            'username' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string'
         ]);
 
         // Check email
-        $user = Account::where('username', $fields['username'])->first();
+        $user = User::where('email', $fields['email'])->first();
 
         // Check password
         if(!$user || !Hash::check($fields['password'], $user->password)) {
@@ -112,10 +94,22 @@ class AccountController extends Controller
     }
 
     public function logout(Request $request) {
-        auth()->user()->tokens()->delete();
+        Auth::logout();
 
         return [
             'message' => 'Logged out'
         ];
+    }
+
+    public function resetPassword(Request $request) {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
     }
 }

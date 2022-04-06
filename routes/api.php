@@ -31,11 +31,12 @@ use App\Http\Controllers\AppliedToLguController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/accounts', [AccountController::class, 'index']);
 Route::post('/create-account', [AccountController::class, 'createAccount']);
-Route::post('/change-password', [AccountController::class, 'changePassword']);
-Route::get('/accounts', [AccountController::class, 'show']);
 Route::post('/login', [AccountController::class, 'login']);
 Route::post('/logout', [AccountController::class, 'logout']);
+Route::post('/change-password', [AccountController::class, 'changePassword']);
+Route::post('/reset-password', [AccountController::class, 'resetPassword'])->middleware('guest')->name('password.email');;
 
 Route::get('/job-position', [JobPositionController::class, 'index']);
 Route::post('/job-position', [JobPositionController::class, 'store']);

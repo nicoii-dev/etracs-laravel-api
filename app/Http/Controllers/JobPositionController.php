@@ -28,15 +28,12 @@ class JobPositionController extends Controller
             'code' => 'required',
             'description' => 'required',
             'org' => 'required',
-            'personnel_id' => 'required',
-            'role' => 'required',
         ]);
         JobPosition::create([
             'code' => $request['code'],
             'description' => $request['description'],
             'org' => $request['org'],
-            'personnel_id' => $request['personnel_id'],
-            'role' => $request['role'],
+            'account_id' => $request['account_id'],
         ]);
         return DB::table('job_positions')->get();
     }
@@ -65,15 +62,12 @@ class JobPositionController extends Controller
             'code' => 'required',
             'description' => 'required',
             'org' => 'required',
-            'personnel_id' => 'required',
-            'role' => 'required',
         ]);
         $update = JobPosition::where('id',$id)->update([
             'code' => $request['code'],
             'description' => $request['description'],
             'org' => $request['org'],
-            'personnel_id' => $request['personnel_id'],
-            'role' => $request['role'],
+            'account_id' => $request['account_id'],
         ]);
         if($update) {
             return DB::table('job_positions')->get();
