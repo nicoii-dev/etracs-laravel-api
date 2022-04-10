@@ -9,11 +9,15 @@ class JobPositionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JobPosition[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
+     * @return JobPosition[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function index()
     {
-        return JobPosition::all();
+        return DB::table('job_positions')
+            ->join('users', 'job_positions.user_id', '=', 'users.id')
+            ->select('job_positions.id', 'job_positions.user_id', 'code', 'description',
+                        'org', 'users.email', 'users.allow_login', 'users.role')
+            ->get();
     }
 
     /**
@@ -33,9 +37,13 @@ class JobPositionController extends Controller
             'code' => $request['code'],
             'description' => $request['description'],
             'org' => $request['org'],
-            'account_id' => $request['account_id'],
+            'user_id' => $request['user_id'],
         ]);
-        return DB::table('job_positions')->get();
+        return DB::table('job_positions')
+            ->join('users', 'job_positions.user_id', '=', 'users.id')
+            ->select('job_positions.id', 'job_positions.user_id', 'code', 'description',
+                'org', 'users.email', 'users.allow_login', 'users.role')
+            ->get();
     }
 
     /**
@@ -67,10 +75,14 @@ class JobPositionController extends Controller
             'code' => $request['code'],
             'description' => $request['description'],
             'org' => $request['org'],
-            'account_id' => $request['account_id'],
+            'user_id' => $request['user_id'],
         ]);
         if($update) {
-            return DB::table('job_positions')->get();
+            return DB::table('job_positions')
+                ->join('users', 'job_positions.user_id', '=', 'users.id')
+                ->select('job_positions.id', 'job_positions.user_id', 'code', 'description',
+                    'org', 'users.email', 'users.allow_login', 'users.role')
+                ->get();
         }
         return 422;
     }
@@ -84,7 +96,11 @@ class JobPositionController extends Controller
     public function destroy($id)
     {
         if(DB::table("job_positions")->where('id',$id)->delete()){
-            return DB::table('job_positions')->get();
+            return DB::table('job_positions')
+                ->join('users', 'job_positions.user_id', '=', 'users.id')
+                ->select('job_positions.id', 'job_positions.user_id', 'code', 'description',
+                    'org', 'users.email', 'users.allow_login', 'users.role')
+                ->get();
         }
         return 500;
     }

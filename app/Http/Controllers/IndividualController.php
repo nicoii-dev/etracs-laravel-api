@@ -25,6 +25,9 @@ class IndividualController extends Controller
                 'street', 'barangay', 'city_municipality', 'zipcode', 'birth_date', 'place_of_birth',
                 'citizenship', 'gender', 'civil_status', 'profession', 'id_presented', 'tin', 'sss', 'height', 'weight') // specify the values
         ->get();
+
+        //eloquent
+        //$test = Individual::with('address', 'other_info')->get();
     }
 
     /**

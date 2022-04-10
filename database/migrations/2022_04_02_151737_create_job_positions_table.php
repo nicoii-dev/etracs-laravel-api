@@ -18,7 +18,7 @@ class CreateJobPositionsTable extends Migration
             $table->string('code');
             $table->string('description');
             $table->string('org');
-            $table->string('account_id')->nullable();
+            $table->string('user_id')->nullable();
             $table->timestamps();
         });
     }

@@ -33,6 +33,7 @@ use App\Http\Controllers\AppliedToLguController;
 */
 Route::get('/accounts', [AccountController::class, 'index']);
 Route::post('/create-account', [AccountController::class, 'createAccount']);
+Route::put('/update-account/{id}', [AccountController::class, 'update']);
 Route::post('/login', [AccountController::class, 'login']);
 Route::post('/logout', [AccountController::class, 'logout']);
 Route::post('/change-password', [AccountController::class, 'changePassword']);

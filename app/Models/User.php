@@ -25,6 +25,10 @@ class User extends Authenticatable
         'role',
     ];
 
+    public function getPersonnel() {
+        return $this->hasOne('App\Models\Personnel', 'id', 'personnel_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

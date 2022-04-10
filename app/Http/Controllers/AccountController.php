@@ -1,17 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 
 class AccountController extends Controller
 {
     public function index() {
-        return User::all();
+        return DB::table('users')
+            ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
+            ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
+                        'email_verified_at', 'firstname', 'middlename', 'lastname')
+            ->get();
     }
 
     public function createAccount(Request $request) {
@@ -38,9 +44,31 @@ class AccountController extends Controller
 //            'token' => $token
 //        ];
 
-        return User::all();
+        return DB::table('users')
+            ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
+            ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
+                'email_verified_at', 'firstname', 'middlename', 'lastname')
+            ->get();
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'allow_login' => 'required',
+            'role' => 'required',
+        ]);
+
+        User::where('id', $id)->update([
+            'allow_login' => $request['allow_login'],
+            'role' => $request['role'],
+        ]);
+
+        return DB::table('users')
+            ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
+            ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
+                'email_verified_at', 'firstname', 'middlename', 'lastname')
+            ->get();
+    }
     public function changePassword(Request $request) {
         $fields = $request->validate([
             'email' => 'required|string',
@@ -85,10 +113,22 @@ class AccountController extends Controller
 
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
+      //  $test = User::with('getPersonnel')->get(); //eloquent
+
+        $personnel = DB::table('personnels')
+            ->where('personnels.id', $user["personnel_id"])
+            ->get();
+
+        if($user->allow_login == "yes") {
+            $response = [
+                'user' => $user,
+                'token' => $token,
+                'personnel' => $personnel,
+            ];
+        } else {
+            $response = "not allowed";
+
+        }
 
         return response($response);
     }

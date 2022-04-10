@@ -40,7 +40,7 @@ class MultipleController extends Controller
             'city_municipality' => 'required',
             'zipcode' => 'required'
         ]);
-        
+
         $multiple = Multiple::create([
             'account_number' => $request['account_number'],
             'multiple_name' => $request['multiple_name'],
@@ -81,7 +81,7 @@ class MultipleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function update(Request $request, $id)
     {
