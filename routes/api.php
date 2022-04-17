@@ -20,6 +20,7 @@ use App\Http\Controllers\LandAdjustmentController;
 use App\Http\Controllers\FormulaVariableController;
 use App\Http\Controllers\RevisionYearController;
 use App\Http\Controllers\AppliedToLguController;
+use App\Http\Controllers\FaasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,3 +138,10 @@ Route::delete('/revision-year/{id}', [RevisionYearController::class, 'destroy'])
 Route::get('/applied-to-lgu/{id}', [AppliedToLguController::class, 'show']);
 Route::post('/applied-to-lgu', [AppliedToLguController::class, 'store']);
 Route::post('/applied-to-lgu/{id}', [AppliedToLguController::class, 'destroy']);
+
+Route::get('/faas', [FaasController::class, 'index']);
+Route::get('/faas/{id}', [FaasController::class, 'show']);
+Route::post('/faas', [FaasController::class, 'store']);
+Route::put('/faas/{id}', [FaasController::class, 'update']);
+Route::delete('/faas/{id}', [FaasController::class, 'destroy']);
+Route::post('/faas/multipledelete', [FaasController::class, 'multipleDelete']);

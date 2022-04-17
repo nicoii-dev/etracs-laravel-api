@@ -25,10 +25,11 @@ class CreateFaasTable extends Migration
             $table->date('issue_date');
             $table->string('effectivity');
             $table->string('quarter');
-            $table->string('restriction');
+            $table->string('restriction')->nullable();
             $table->string('previous_td_number')->nullable();
             $table->string('previous_pin')->nullable();
             $table->string('owner_id');
+            $table->string('owner_name');
             $table->string('owner_address');
             $table->string('declared_owner');
             $table->string('declared_address');
@@ -46,7 +47,11 @@ class CreateFaasTable extends Migration
             $table->string('east');
             $table->string('south');
             $table->string('west');
-            $table->string('classification');
+            $table->string('classification_id');
+            $table->string('classification_name');
+            $table->string('specific_class');
+            $table->string('sub_class');
+            $table->string('unit_value');
             $table->string('area');
             $table->string('area_type');
             $table->string('market_value');
