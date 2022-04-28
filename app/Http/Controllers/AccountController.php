@@ -16,8 +16,14 @@ class AccountController extends Controller
         return DB::table('users')
             ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
             ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
-                        'email_verified_at', 'firstname', 'middlename', 'lastname')
+                'email_verified_at', 'firstname', 'middlename', 'lastname')
             ->get();
+//        return DB::table('users')
+//            ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
+//            ->join('job_positions', 'users.id', '=', 'job_positions.user_id')
+//            ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
+//                'email_verified_at', 'firstname', 'middlename', 'lastname', 'code', 'description', 'org')
+//            ->get();
     }
 
     public function createAccount(Request $request) {
@@ -43,12 +49,17 @@ class AccountController extends Controller
 //            'user' => $user,
 //            'token' => $token
 //        ];
-
         return DB::table('users')
             ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
             ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
                 'email_verified_at', 'firstname', 'middlename', 'lastname')
             ->get();
+//        return DB::table('users')
+//            ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
+//            ->join('job_positions', 'users.id', '=', 'job_positions.user_id')
+//            ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
+//                'email_verified_at', 'firstname', 'middlename', 'lastname', 'code', 'description', 'org')
+//            ->get();
     }
 
     public function update(Request $request, $id)
@@ -62,12 +73,17 @@ class AccountController extends Controller
             'allow_login' => $request['allow_login'],
             'role' => $request['role'],
         ]);
-
         return DB::table('users')
             ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
             ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
                 'email_verified_at', 'firstname', 'middlename', 'lastname')
             ->get();
+//        return DB::table('users')
+//            ->join('personnels', 'users.personnel_id', '=', 'personnels.id')
+//            ->join('job_positions', 'users.id', '=', 'job_positions.user_id')
+//            ->select('users.id', 'personnel_id', 'users.email', 'allow_login', 'role',
+//                'email_verified_at', 'firstname', 'middlename', 'lastname', 'code', 'description', 'org')
+//            ->get();
     }
     public function changePassword(Request $request) {
         $fields = $request->validate([
@@ -118,13 +134,19 @@ class AccountController extends Controller
         $personnel = DB::table('personnels')
             ->where('personnels.id', $user["personnel_id"])
             ->get();
+        $job = DB::table('job_positions')
+            ->where('job_positions.user_id', $user["id"])
+            ->get();
 
-        if($user->allow_login == "yes") {
+        if($user->allow_login == "yes" && $job->containsOneItem()) {
             $response = [
                 'user' => $user,
                 'token' => $token,
                 'personnel' => $personnel,
+                'job' => $job,
             ];
+        } else if($job->isEmpty()) {
+            $response = "Please ask for your job description";
         } else {
             $response = "not allowed";
 

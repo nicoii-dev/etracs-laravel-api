@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 use App\Models\Municipality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class MunicipalityController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function index()
     {
-        return Municipality::all();
+        return DB::table('municipalities')
+            ->join('barangays', 'municipalities.id', '=', 'barangays.municipality_id')
+            ->select('barangays.id', 'barangays.municipality_id', 'municipalities.municipality_name', 'municipalities.lgu_name',
+                            'barangays.lgu_name', 'barangays.formal_name', 'municipalities.index_number', 'municipalities.parent_id')
+            ->get();
     }
 
     /**

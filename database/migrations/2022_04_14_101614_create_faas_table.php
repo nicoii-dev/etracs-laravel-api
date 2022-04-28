@@ -65,8 +65,8 @@ class CreateFaasTable extends Migration
             $table->date('appraised_date');
             $table->string('recommended_by')->nullable();
             $table->date('recommended_date')->nullable();
-            $table->string('approve_by');
-            $table->date('approve_date');
+            $table->string('approve_by')->nullable();
+            $table->date('approve_date')->nullable();
             $table->string('remarks');
             $table->timestamps();
         });
