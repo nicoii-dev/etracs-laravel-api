@@ -21,6 +21,7 @@ use App\Http\Controllers\FormulaVariableController;
 use App\Http\Controllers\RevisionYearController;
 use App\Http\Controllers\AppliedToLguController;
 use App\Http\Controllers\FaasController;
+use App\Http\Controllers\ForgotPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,10 @@ Route::put('/update-account/{id}', [AccountController::class, 'update']);
 Route::post('/login', [AccountController::class, 'login']);
 Route::post('/logout', [AccountController::class, 'logout']);
 Route::post('/change-password', [AccountController::class, 'changePassword']);
-Route::post('/reset-password', [AccountController::class, 'resetPassword'])->middleware('guest')->name('password.email');;
+Route::post('/reset-password', [AccountController::class, 'resetPassword'])->middleware('guest')->name('password.email');
+
+Route::post('/forgot-password', [ForgotPassword::class, 'forgotPassword']);
+Route::post('/reset-password', [ForgotPassword::class, 'reset']);
 
 Route::get('/job-position', [JobPositionController::class, 'index']);
 Route::post('/job-position', [JobPositionController::class, 'store']);
