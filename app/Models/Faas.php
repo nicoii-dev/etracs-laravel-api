@@ -23,6 +23,7 @@ class Faas extends Model
         'restriction',
         'previous_td_number',
         'previous_pin',
+        'previous_owner',
         'owner_id',
         'owner_name',
         'owner_address',

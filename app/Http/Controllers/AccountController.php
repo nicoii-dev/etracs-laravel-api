@@ -108,7 +108,7 @@ class AccountController extends Controller
         $response = [
             $user,
         ];
-        return response($response, 201);
+        return response("success", 201);
     }
 
     public function login(Request $request) {
