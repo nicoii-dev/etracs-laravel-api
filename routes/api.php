@@ -144,7 +144,7 @@ Route::post('/applied-to-lgu', [AppliedToLguController::class, 'store']);
 Route::post('/applied-to-lgu/{id}', [AppliedToLguController::class, 'destroy']);
 
 Route::get('/faas', [FaasController::class, 'index']);
-Route::get('/faas/{id}', [FaasController::class, 'show']);
+Route::post('/faas/status', [FaasController::class, 'show']);
 Route::post('/faas', [FaasController::class, 'store']);
 Route::put('/faas/{id}', [FaasController::class, 'update']);
 Route::delete('/faas/{id}', [FaasController::class, 'destroy']);

@@ -133,11 +133,13 @@ class FaasController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        return DB::table('faas')
+            ->where('faas.status', $request['status'])
+            ->get();
     }
 
     /**
