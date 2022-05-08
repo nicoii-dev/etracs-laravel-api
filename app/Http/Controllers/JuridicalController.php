@@ -18,7 +18,7 @@ class JuridicalController extends Controller
     {
         return DB::table('juridicals')
         ->join('juridical_addresses', 'juridicals.id', '=', 'juridical_addresses.juridical_id')
-        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization', 
+        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization',
                 'tin', 'nature_of_business', 'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
@@ -27,13 +27,13 @@ class JuridicalController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function store(Request $request)
     {
         $request->validate([
-            'account_number' => 'required',
-            'juridical_name' => 'required',
+            'account_number' => 'required|unique:juridicals,account_number',
+            'juridical_name' => 'required|unique:juridicals,juridical_name',
             'contact_number' => 'required',
             'date_registered' => 'required',
             'kind_of_organization' => 'required',
@@ -44,7 +44,7 @@ class JuridicalController extends Controller
             'city_municipality' => 'required',
             'zipcode' => 'required'
         ]);
-        
+
         $juridical = Juridical::create([
             'account_number' => $request['account_number'],
             'juridical_name' => $request['juridical_name'],
@@ -68,7 +68,7 @@ class JuridicalController extends Controller
 
         return DB::table('juridicals')
         ->join('juridical_addresses', 'juridicals.id', '=', 'juridical_addresses.juridical_id')
-        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization', 
+        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization',
                 'tin', 'nature_of_business', 'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
@@ -77,14 +77,14 @@ class JuridicalController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function show($id)
     {
         return DB::table('juridicals')
         ->where('juridicals.id', $id)
         ->join('juridical_addresses', 'juridicals.id', '=', 'juridical_addresses.juridical_id')
-        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization', 
+        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization',
                 'tin', 'nature_of_business', 'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
@@ -94,13 +94,13 @@ class JuridicalController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'account_number' => 'required',
-            'juridical_name' => 'required',
+            'account_number' => 'required|unique:juridicals,account_number,'. $id .'id',
+            'juridical_name' => 'required|unique:juridicals,juridical_name,'. $id .'id',
             'contact_number' => 'required',
             'date_registered' => 'required',
             'kind_of_organization' => 'required',
@@ -134,7 +134,7 @@ class JuridicalController extends Controller
 
         return DB::table('juridicals')
         ->join('juridical_addresses', 'juridicals.id', '=', 'juridical_addresses.juridical_id')
-        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization', 
+        ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization',
                 'tin', 'nature_of_business', 'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
         ->get();
     }
@@ -150,7 +150,7 @@ class JuridicalController extends Controller
         if(DB::table("juridicals")->where('id',$id)->delete()){
             return DB::table('juridicals')
             ->join('juridical_addresses', 'juridicals.id', '=', 'juridical_addresses.juridical_id')
-            ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization', 
+            ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization',
                     'tin', 'nature_of_business', 'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks') // specify the values
             ->get();
         }else{
@@ -164,7 +164,7 @@ class JuridicalController extends Controller
         if(DB::table("juridicals")->whereIn('id',explode(",",$ids))->delete()){
             return DB::table('juridicals')
             ->join('juridical_addresses', 'juridicals.id', '=', 'juridical_addresses.juridical_id')
-            ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization', 
+            ->select('juridicals.id', 'account_number', 'juridical_name', 'email', 'contact_number', 'date_registered', 'kind_of_organization',
                     'tin', 'nature_of_business', 'house_number', 'street', 'barangay', 'city_municipality', 'zipcode', 'remarks',) // specify the values
             ->get();
         }else{

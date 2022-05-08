@@ -32,8 +32,8 @@ class MultipleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'account_number' => 'required',
-            'multiple_name' => 'required',
+            'account_number' => 'required|unique:multiples,account_number',
+            'multiple_name' => 'required|unique:multiples,multiple_name',
             'contact_number' => 'required',
             'street' => 'required',
             'barangay' => 'required',
@@ -86,8 +86,8 @@ class MultipleController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'account_number' => 'required',
-            'multiple_name' => 'required',
+            'account_number' => 'required|unique:multiples,account_number,'. $id .'id',
+            'multiple_name' => 'required|unique:multiples,multiple_name,'. $id .'id',
             'contact_number' => 'required',
             'street' => 'required',
             'barangay' => 'required',

@@ -23,6 +23,17 @@ class CreateAccountsTable extends Migration
             $table->string('role');
             $table->timestamps();
         });
+
+        // Insert some stuff
+        DB::table('accounts')->insert(
+            array(
+                'personnel_id' => '1',
+                'email' => 'admin@domain.com',
+                'password' => 'etracsadmin',
+                'allow_login' => 'yes',
+                'role' => 'ADMIN',
+            )
+        );
     }
 
     /**

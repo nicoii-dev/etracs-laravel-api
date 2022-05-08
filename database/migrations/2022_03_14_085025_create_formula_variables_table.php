@@ -18,6 +18,13 @@ class CreateFormulaVariablesTable extends Migration
             $table->string('variable');
             $table->timestamps();
         });
+
+        // Insert some stuff
+        DB::table('formula_variables')->insert(
+            array(
+                    'variable' => 'SYS_BASE_MARKET_VALUE',
+            )
+        );
     }
 
     /**

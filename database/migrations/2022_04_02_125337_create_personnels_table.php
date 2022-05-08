@@ -26,6 +26,17 @@ class CreatePersonnelsTable extends Migration
             $table->string('txn_code')->nullable();
             $table->timestamps();
         });
+
+        // Insert some stuff
+        DB::table('personnels')->insert(
+            array(
+                'staff_number' => '123',
+                'firstname' => 'admin',
+                'lastname' => 'admin',
+                'birth_date' => '1990-01-01',
+                'gender' => 'male',
+            )
+        );
     }
 
     /**

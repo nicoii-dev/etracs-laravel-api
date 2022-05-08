@@ -13,11 +13,11 @@ class MunicipalityController extends Controller
      */
     public function index()
     {
-        return DB::table('municipalities')
-            ->join('barangays', 'municipalities.id', '=', 'barangays.municipality_id')
-            ->select('barangays.id', 'barangays.municipality_id', 'municipalities.municipality_name', 'municipalities.lgu_name',
-                            'barangays.lgu_name', 'barangays.formal_name', 'municipalities.index_number', 'municipalities.parent_id')
-            ->get();
+        return DB::table('municipalities')->get();
+//            ->join('barangays', 'municipalities.id', '=', 'barangays.municipality_id')
+//            ->select('barangays.id', 'barangays.municipality_id', 'municipalities.municipality_name', 'municipalities.lgu_name',
+//                            'barangays.lgu_name', 'barangays.formal_name', 'municipalities.index_number', 'municipalities.parent_id')
+//            ->get();
     }
 
     /**

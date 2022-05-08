@@ -21,6 +21,16 @@ class CreateJobPositionsTable extends Migration
             $table->string('user_id')->nullable();
             $table->timestamps();
         });
+
+        // Insert some stuff
+        DB::table('job_positions')->insert(
+            array(
+                'code' => '123',
+                'description' => 'admin',
+                'org' => 'IT',
+                'user_id' => '1',
+            )
+        );
     }
 
     /**

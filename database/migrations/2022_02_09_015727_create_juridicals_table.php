@@ -15,8 +15,8 @@ class CreateJuridicalsTable extends Migration
     {
         Schema::create('juridicals', function (Blueprint $table) {
             $table->id();
-            $table->string('account_number');
-            $table->string('juridical_name');
+            $table->string('account_number')->unique();
+            $table->string('juridical_name')->unique();
             $table->string('email')->nullable();
             $table->string('contact_number');
             $table->date('date_registered');
