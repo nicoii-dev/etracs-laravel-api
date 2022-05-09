@@ -32,6 +32,7 @@ class CreatePersonnelsTable extends Migration
             array(
                 'staff_number' => '123',
                 'firstname' => 'admin',
+                'middlename' => 'admin',
                 'lastname' => 'admin',
                 'birth_date' => '1990-01-01',
                 'gender' => 'male',

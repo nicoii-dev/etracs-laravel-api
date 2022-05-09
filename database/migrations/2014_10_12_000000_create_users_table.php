@@ -24,6 +24,17 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->timestamps();
         });
+
+        // Insert some stuff
+        DB::table('users')->insert(
+            array(
+                'personnel_id' => '1',
+                'email' => 'admin@domain.com',
+                'password' => bcrypt('etracsadmin'),
+                'allow_login' => 'yes',
+                'role' => 'ADMIN',
+            )
+        );
     }
 
     /**

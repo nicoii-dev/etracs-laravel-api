@@ -7,7 +7,6 @@ use App\Models\Individual;
 use App\Models\IndividualAddress;
 use App\Models\OtherInformation;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class IndividualController extends Controller
 {
@@ -34,7 +33,7 @@ class IndividualController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|string
      */
     public function store(Request $request)
     {
@@ -57,6 +56,13 @@ class IndividualController extends Controller
             'weight' => 'required',
         ]);
 
+        $firstname = Individual::where('firstname', $request['firstname'])
+            ->where('lastname', $request['lastname'])
+            ->where('birth_date', $request['birth_date'])
+            ->first();
+        if ($firstname !== null) {
+            return 422;
+        }
         $individual = Individual::create([
             'firstname' => $request['firstname'],
             'middlename' => $request['middlename'],
@@ -121,7 +127,7 @@ class IndividualController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection
+     * @return \Illuminate\Http\Response|\Illuminate\Support\Collection|int
      */
     public function update(Request $request, $id)
     {
@@ -143,6 +149,15 @@ class IndividualController extends Controller
             'height' => 'required',
             'weight' => 'required',
         ]);
+
+        $firstname = Individual::where('firstname', $request['firstname'])
+            ->where('lastname', $request['lastname'])
+            ->where('birth_date', $request['birth_date'])
+            ->where('id', '!=' , $id)
+            ->first();
+        if ($firstname !== null) {
+            return 422;
+        }
 
         Individual::where('id',$id)->update([
             'firstname' => $request['firstname'],
