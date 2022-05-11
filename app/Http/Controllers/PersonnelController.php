@@ -54,7 +54,7 @@ class PersonnelController extends Controller
      */
     public function show($id)
     {
-        //
+        return Personnel::find($id);
     }
 
     /**

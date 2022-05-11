@@ -51,6 +51,7 @@ Route::delete('/job-position/{id}', [JobPositionController::class, 'destroy']);
 
 Route::get('/personnel', [PersonnelController::class, 'index']);
 Route::post('/personnel', [PersonnelController::class, 'store']);
+Route::post('/personnel/{id}', [PersonnelController::class, 'show']);
 Route::put('/personnel/{id}', [PersonnelController::class, 'update']);
 Route::delete('/personnel/{id}', [PersonnelController::class, 'destroy']);
 
